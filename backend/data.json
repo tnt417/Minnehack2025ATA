@@ -132,6 +132,56 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "Minnehack Cool Guys",
+            "location": "Coffman MU",
+            "id": 4,
+            "member_ids": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "owner_id": 3,
+            "contributors": [
+                2,
+                3,
+                4
+            ],
+            "challenges": [
+                {
+                    "contributors": [
+                        2,
+                        3,
+                        4
+                    ],
+                    "prompt": "Take a photo of a cool stick",
+                    "start_date": 1737504000000,
+                    "end_date": 1738108800000,
+                    "id": 6,
+                    "submissions": [
+                        {
+                            "user_id": 2,
+                            "votes": 3,
+                            "id": 1,
+                            "image_name": "c6228e0e724eb528ae3e959b216fb29d"
+                        },
+                        {
+                            "user_id": 3,
+                            "votes": 76,
+                            "id": 2,
+                            "image_name": "325ede4516d4de7ab824b96422407c69"
+                        },
+                        {
+                            "user_id": 4,
+                            "votes": 43,
+                            "id": 3,
+                            "image_name": "29254e0d2769cdeef75370a62e3e516b"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

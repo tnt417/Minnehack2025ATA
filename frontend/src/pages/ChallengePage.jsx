@@ -215,7 +215,7 @@ const ChallengePage = ({auth}) => {
                 </div>
               </div>
             )}
-            {activeTab === 'challenge' && phase == "intermission" && (
+            {activeTab === 'challenge' && phase == "results" && (
               <div>
                 <p className="text-gray-600">
                   The results are in... The winner of this challenge is Alex
@@ -224,10 +224,11 @@ const ChallengePage = ({auth}) => {
                 <p className="text-gray-600">
                   The prompt was cool sticks
                 </p>
-
-                <p className="text-gray-600">
-                  PHOTO GOES HERE
-                </p>
+                <div className="mt-6">
+                    <button onClick={() => {navigate(`/results?groupId=2&challengeId=1`)}} className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                        View Results
+                    </button>
+                </div>
               </div>
             )}
           </div>

@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import JudgingPage from './pages/JudgingPage';
 import GroupInfo from './pages/GroupInfo';
 import JoinGroup from './pages/JoinGroup';
+import ResultsPage from './pages/ResultsPage';
 import backend from "./backend"
 
 function App() {
@@ -17,8 +18,8 @@ function App() {
 
   //
 
-  const [authToken, setAuthToken] = useState("");
-  const [userId, setUserId] = useState(-1);
+  const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
 
   async function validateAuthToken(at){
     console.log(at)
@@ -64,6 +65,7 @@ function App() {
         <Route path="/judge" element={isLoggedIn() ? <JudgingPage userId={userId}/> : <Navigate to="/auth"/>} />
         <Route path="/group-info" element={isLoggedIn() ? <GroupInfo /> : <Navigate to="/auth"/>} />
         <Route path="/join" element={<JoinGroup authToken={authToken} />} />
+        <Route path="/results" element={isLoggedIn() ? <ResultsPage/> : <Navigate to="/auth"/>} />
       </Routes>
     </Router>
   );
