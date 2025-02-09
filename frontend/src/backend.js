@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const backend = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: "http://128.101.131.201:3456/",
     timeout: 12000,
     withCredentials: false,
     // tells browser to send cookie-id recieved by the server from the same origin

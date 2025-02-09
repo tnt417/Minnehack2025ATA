@@ -55,7 +55,7 @@ const ChallengePage = ({auth}) => {
     if(res.data.image_name == null) return;
 
     //TODO: change when deploying
-    setImageUrl("http://localhost:3000/" + res.data.image_name)
+    setImageUrl("http://128.101.131.201:3456/" + res.data.image_name)
   }
 
   const [leaderboard, setLeaderboard] = useState([
