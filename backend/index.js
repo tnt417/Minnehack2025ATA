@@ -60,6 +60,16 @@ app.get("/logout", (req, res) => {
     }
 });
 
+app.get("/verify-token", (req, res) => {
+    const authToken = req.query.auth;
+    const success = authUser(authToken);
+    if (success) {
+        res.status(200).json({success: true});
+    } else {
+        res.status(200).json({success: false});
+    }
+});
+
 // -- data --------------------------------------------------
 
 app.get("/current_challenge", (req, res) => {
