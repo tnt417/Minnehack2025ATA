@@ -1,9 +1,13 @@
 import { authUser, getDb, login, saveDb, signup } from "./database.js";
 import express from "express";
 import cors from "cors";
+import multer from "multer";
+
+const multUpload = multer({dest: "imgUploads/"});
 
 const app = express();
 app.use(cors());
+app.use(express.static("imgUploads"));
 const PORT = 3000;
 
 // -- auth --------------------------------------------------
@@ -64,7 +68,7 @@ app.get("/current_challenge", (req, res) => {
         const db = getDb();
         const group = db.groups.find(group => group.id == groupId)
         const challenge = group.challenges[group.challenges.length - 1];
-        
+
         res.status(200).json(challenge)
     }
     else{
@@ -88,7 +92,6 @@ app.get("/past-challenges", (req, res) => {
             res.status(400).send("Invalid Input")
         }
     }
-    
 )
 
 
@@ -190,11 +193,6 @@ app.get("/leaderboard", (req, res) => {
         userId: wins
     };
 
-    // for each, userId in wins
-        // wins[+=1]
-        // else, set to 1
-
-    
     const winners = []
     for(let i = 0; i < db.groups.length; i++){
         if(db.groups[i].id === groupId){
@@ -203,6 +201,28 @@ app.get("/leaderboard", (req, res) => {
             }
         }
     }
+})
+
+// -- img routes -------------------------------------
+
+app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
+    console.log("Picture route hit");
+    const db = getDb();
+    const fileName = req.file.fileName;
+    const authToken = Number(req.query.auth);
+    const userId = authUser(authToken);
+
+    console.log("Saved file:", fileName);
+
+    if (!(userId > 0)) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+
+    //todo: get current challenge
+    //todo: update current challenge, add or swap submission
+
+    res.status(200).send("File uploaded");
 })
 
 // ---------------------------------------------------

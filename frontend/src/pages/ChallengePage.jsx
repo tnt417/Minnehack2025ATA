@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import backend from "../backend.js";
 
-const ChallengePage = () => {
+const ChallengePage = ({auth}) => {
   const [activeTab, setActiveTab] = useState('challenge');
   const [phase, setPhase] = useState("submission"); // judging / submission / intermission
 
@@ -11,8 +12,22 @@ const ChallengePage = () => {
   const [imageUrl, setImageUrl] = useState(null);
 
   const handleFileChange = (event) => {
+
+    console.log("Starting file upload");
+
     const selectedFile = event.target.files[0];
     if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      console.log("Now sending picture");
+      backend.post(`/challenge-submission?auth=${auth}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data;",
+          "Accept": "multipart/form-data",
+        }
+      }).then((res) => {
+        console.log(`Uploaded img: ${res}`);
+      });
       setSubmission(selectedFile);
 
       // Create a URL for the selected image file and set it in state
@@ -118,6 +133,7 @@ const ChallengePage = () => {
                     name="file"
                     id="fileInput"
                     onChange={handleFileChange}
+                    accept='image/*'
                     className="hidden"
                   />
                   {/* Hidden submit button (automatically triggered) */}

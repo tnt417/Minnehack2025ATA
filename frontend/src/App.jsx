@@ -10,8 +10,8 @@ import JudgingPage from './pages/JudgingPage';
 import LandingPage from './pages/LandingPage';
 
 function App() {
-  // const isLoggedIn = () => {return authToken != ""}
-  const isLoggedIn = () => true;
+  const isLoggedIn = () => {return authToken != ""}
+  // const isLoggedIn = () => true;
 
   //
 
@@ -30,7 +30,7 @@ function App() {
         <Route path="/explore-groups" element={isLoggedIn() ? <GroupList myGroups={false}/> : <Navigate to="/auth"/>} />
         <Route path="/my-groups" element={isLoggedIn() ? <GroupList myGroups={true}/> : <Navigate to="/auth"/>} />
         <Route path="/create-group" element={isLoggedIn() ? <CreateGroup /> : <Navigate to="/auth"/>} />
-        <Route path="/challenge" element={isLoggedIn() ? <ChallengePage /> : <Navigate to="/auth"/>} />
+        <Route path="/challenge" element={isLoggedIn() ? <ChallengePage auth={authToken} /> : <Navigate to="/auth"/>} />
         <Route path="/judge" element={isLoggedIn() ? <JudgingPage /> : <Navigate to="/auth"/>} />
       </Routes>
     </Router>
