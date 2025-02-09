@@ -9,7 +9,7 @@ const ChallengePage = ({auth}) => {
   const groupId = queryParams.get('groupId');
 
   const [activeTab, setActiveTab] = useState('challenge');
-  const [phase, setPhase] = useState("submission"); // judging / submission / intermission
+  const [phase, setPhase] = useState("judging"); // judging / submission / intermission
 
   const [prompt, setPrompt] = useState("No prompt has been set");
 
@@ -193,7 +193,7 @@ const ChallengePage = ({auth}) => {
                 </p>
 
                 <div className="mt-6">
-                    <button onClick={() => {navigate("/judge")}} className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                    <button onClick={() => {navigate(`/judge?groupId=${groupId}`)}} className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
                         Judge Photos
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Submission({submissionData, setPhoto, selectionFull})
+export default function Submission({imageName, submissionId, setId, selectionFull})
 {
 
     const [selected, setSelected] = useState(false);
@@ -13,11 +13,11 @@ export default function Submission({submissionData, setPhoto, selectionFull})
         <div className="w-[300px] h-[300px] bg-black rounded-xl relative">
             <img
                 className={`shadow-sm relative left-0 top-0 w-full aspect-square rounded-xl ${canClick() ? "hover:opacity-80 cursor-pointer" : "disabled"} transition duration-200`}
-                src={submissionData.photo}
+                src={"http://localhost:3000/" + imageName}
                 alt="Submission"
                 onClick={() => {
                     if(!canClick()) return;
-                    setPhoto(submissionData.photo, !selected);
+                    setId(submissionId, !selected);
                     setSelected(!selected);
                 }}
             />
