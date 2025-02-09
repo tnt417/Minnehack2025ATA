@@ -1,9 +1,15 @@
 import Submission from "./components/Submission"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import stickImg from "../assets/coolstick.jpg"
+import { useLocation } from "react-router-dom"
+import backend from "../backend"
 
-export default function JudgingPage()
+export default function JudgingPage({userId})
 {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const groupId = queryParams.get('groupId');
+
     const [submissions, setSubmissions] = useState([
         {user:"Tony", photo:stickImg},
         {user:"Berry", photo:stickImg},
@@ -15,6 +21,18 @@ export default function JudgingPage()
 
     const [prompt, setPrompt] = useState(["a cool stick"]);
     const [selectedPhotos, setSelectedPhotos] = useState([]);
+    const [submissions, setSubmissions] = useState([])
+
+    async function fetchCurChallenge()
+    {
+      var res = await backend.get(`/current_challenge?groupId=${groupId}`)
+
+      setSubmissions(res.data)
+    }
+
+    useEffect(() => {
+
+    }, []) 
 
     const setPhoto = (photo, value) => {
         if(value)

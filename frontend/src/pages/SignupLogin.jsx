@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import backend from "../backend";
 
-function SignupLogin({setAuthToken}) {
+function SignupLogin({setInfo}) {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ function SignupLogin({setAuthToken}) {
   async function doLogin() {
     var res = await backend.get(`/login?email=${email}&password=${password}`)
 
-    setAuthToken(res.data.auth)
+    setInfo(res.data.auth, res.data.userId)
   }
 
   // Handle form submission

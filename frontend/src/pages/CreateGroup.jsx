@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-export default function CreateGroup() {
+import backend from "../backend"
+import { useNavigate } from "react-router-dom";
+
+export default function CreateGroup({authToken}) {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     groupName: "",
     initialPrompt: "",
@@ -14,9 +20,21 @@ export default function CreateGroup() {
     });
   };
 
+  async function submitGroup
+  () {
+    var res = await backend.get(`/post-new-group?auth=${authToken}&groupName=${formData.groupName}&initialPrompt=${formData.initialPrompt}`);
+
+    if(res.status == 200){
+      navigate("/my-groups")
+    }
+  }
+
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     console.log("Form Data Submitted:", formData);
+
+    submitGroup();
+
     // Add submission logic here
   };
 
@@ -64,7 +82,7 @@ export default function CreateGroup() {
           <div>
             <button
               type="submit"
-              className="text-white mt-4 px-4 w-full py-2 rounded bg-blue-500"
+              className="text-white mt-4 px-4 w-full py-2 cursor-pointer hover:bg-blue-600 rounded bg-blue-500"
             >
               Create Group
             </button>

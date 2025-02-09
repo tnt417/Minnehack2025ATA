@@ -11,6 +11,8 @@ const ChallengePage = ({auth}) => {
   const [activeTab, setActiveTab] = useState('challenge');
   const [phase, setPhase] = useState("submission"); // judging / submission / intermission
 
+  const [prompt, setPrompt] = useState("No prompt has been set");
+
   const navigate = useNavigate();
 
   const [imageUrl, setImageUrl] = useState(placeholder);
@@ -25,6 +27,19 @@ const ChallengePage = ({auth}) => {
     
     console.log(res)
     setGroupData(res.data[0])
+    var challenges = res.data[0].challenges;
+    setPrompt(challenges[challenges.length-1].prompt)
+  }
+
+  async function fetchSubmission () {
+    var res = await backend.get(`/current-submission?auth=${auth}&groupId=${groupId}`,{
+      headers:{"Content-Type": "multipart/form-data", Accept: "multipart/form-data"}
+    })
+
+    console.log(res.data.image_name)
+
+    //TODO: change when deploying
+    setImageUrl("http://localhost:3000/" + res.data.image_name)
   }
 
   const [leaderboard, setLeaderboard] = useState([
@@ -36,6 +51,7 @@ const ChallengePage = ({auth}) => {
 
   useEffect(() => {
     fetchGroup()
+    fetchSubmission()
   }, [])
 
   const handleFileChange = (event) => {
@@ -126,7 +142,7 @@ const ChallengePage = ({auth}) => {
                   Your prompt is...
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
-                  Take a photo of the coolest stick you can find in Minneapolis
+                  {prompt}
                 </p>
 
                 {imageUrl && (
