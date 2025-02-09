@@ -28,9 +28,9 @@ function App() {
 
   return (
     <Router>
-      <NavBar/>
+      <NavBar loggedIn={isLoggedIn}/>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Navigate to="/auth"/>} />
         <Route path="/auth" element={isLoggedIn() ? <Navigate to="/my-groups"/> : <SignupLogin setInfo={
           (token, userId) => {
             setAuthToken(token);
