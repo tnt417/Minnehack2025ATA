@@ -22,18 +22,19 @@ export function getDb() {
 }
 
 // saves current db in memory
-export function saveDb() {
-    if (DbObject === null) {
-        console.error("Saving DB before DB has been read into memory");
-        process.exit(1);
-    }
-    const jsonString = JSON.stringify(DbObject, null, 2);
+export function saveDb(exitAfterSaving) {
+    const jsonString = JSON.stringify(getDb(), null, 2);
     fs.writeFile("db.json", jsonString, err => {
         if (err) {
             console.error(`Error saving data: ${err}`);
             process.exit(1);
         }
         console.log("Database written successfully");
+
+        if(exitAfterSaving)
+        {
+            process.exit();
+        }
     });
 }
 
