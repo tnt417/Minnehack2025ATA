@@ -102,21 +102,22 @@ app.get("/my-groups", (req, res) => {
         res.status(400).send("Invalid Input")
     }
     const userId = authUser(auth);
+
     if(!userId){
         res.status(400).send("Invalid Input");
+        return;
     }
 
     const db = getDb();
-    const data = [];
-    for(let i = 0; i < db.groups.length; i++){
-        if(userId in db.groups[i].member_ids){
-            data.push({
-                id: db.groups[i].id,
-                name: db.groups[i].name,
-                memberCount: db.groups[i].member_ids.length
-            })
-        }
-    }
+
+    const data = db.groups
+        .filter(group => group.member_ids.includes(userId))
+        .map(group => ({
+            id: group.id,
+            name: group.name,
+            memberCount: group.member_ids.length
+        }));
+
     res.status(200).json(data);
 }
 )
