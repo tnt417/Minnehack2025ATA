@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import JudgingPage from './pages/JudgingPage';
 import GroupInfo from './pages/GroupInfo';
 import JoinGroup from './pages/JoinGroup';
+import backend from "./backend"
 
 function App() {
   const isLoggedIn = () => {return authToken != ""}
@@ -19,11 +20,27 @@ function App() {
   const [authToken, setAuthToken] = useState("");
   const [userId, setUserId] = useState(-1);
 
+  async function validateAuthToken(at){
+    console.log(at)
+
+    var res = await backend.get("/verify-token?auth=" + at)
+
+    console.log(res)
+
+    if(!res.data.success)
+    {
+      setAuthToken("")
+    }
+  }
+
   useEffect(() => {
     const at = localStorage.getItem("authToken")
     const uid = localStorage.getItem("userId")
 
-    if(at) setAuthToken(at)
+    if(at){
+      setAuthToken(at)
+      validateAuthToken(at)
+    }
     if(uid) setUserId(uid)
   }, [])
 
