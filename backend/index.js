@@ -96,24 +96,68 @@ app.get("/current-submission", (req, res) => {
     res.json({image_name: submission ? submission.image_name : null});
 })
 
+// gets list of all past challenges for history page
 app.get("/past-challenges", (req, res) => {
     const groupId = Number(req.query.groupId);
     if(typeof groupId == "number"){
         const db = getDb();
         const group = db.groups.find(group => group.id == groupId);
-        /*for(let i = 0; i < group.challenges.length; i++){
-            const challengeArray = [];
-            challengeArray.push(group.challenges[i]);
-        */
-       const challenges = {challenges: group.challenges}
-        res.status(200).json(challenges);
-        }
-        else{
-            res.status(400).send("Invalid Input")
-        }
-    }
-)
+        const lastChallenge = group.challenges[group.Challenges.length - 1];
+        const challenges = group.challenges
+            .filter(challenge => challenge !== lastChallenge)
+            .map(challenge => {
+                const winner = getWinner(challenge);
+                const winnerName = db.users.find(user => user.id === winner).name
+                return {
+                    id: challenge.id,
+                    prompt: challenge.prompt,
+                    start_date: challenge.start_date,
+                    end_date: challenge.end_date,
+                    winner: winnerName,
+                }
+            });
 
+        res.status(200).json(challenges);
+    } else {
+        res.status(400).send("Invalid Input");
+    }
+});
+
+// used for showing data for a challenge picked from challenge history
+app.get("/past-challenge-result", (req, res) => {
+    const groupId = Number(req.query.groupId);
+    const challengeId = Number(req.query.challengeId);
+    const db = getDb();
+
+    if (!(groupId > 0) || !(challengeId > 0)) {
+        res.status(400).send("Invalid input");
+        return;
+    }
+
+    const challenge = db.groups
+        .find(group => group.id === groupId)
+        .challenges.find(challenge => challenge.id === challengeId);
+
+    const submissions = challenge.submissions
+        .sort((a, b) => a.votes - b.votes)
+        .map(submission => {
+            const userName = db.users.find(user => user.id === submission.user_id);
+            return {
+                name: userName,
+                votes: submission.votes,
+                image_name: submission.image_name
+            }
+        });
+
+    const data = {
+        prompt: challenge.prompt,
+        start_date: challenge.start_date,
+        end_date: challenge.end_date,
+        submissions: submissions,
+    };
+
+    res.status(200).json(data);
+});
 
 //(auth: your token) -> group id & name & membercount[]
 app.get("/my-groups", (req, res) => {
@@ -180,7 +224,6 @@ app.get("/group-data", (req, res) => {
     const db = getDb();
     const data = [];
     for(let i = 0; i < db.groups.length; i++){
-        console.log(typeof db.groups[i].id);
         if(groupId === db.groups[i].id){
             data.push({
                 name: db.groups[i].name,
@@ -226,6 +269,20 @@ app.get("/leaderboard", (req, res) => {
     data.sort((a, b) => a.score - b.score);
 
     res.status(200).json(data);
+});
+
+app.get("/prompt-idea", (req, res) => {
+    const options = [
+        "Nicest looking stick",
+        "Best home-cooked meal",
+        "Best picture to use for an album cover",
+        "A tragic situation",
+        "Best place to relax",
+        "Most perfectly captured sunset",
+        "Most interesting looking cloud",
+    ];
+    const choice = options[Math.floor(Math.random() * options.length)];
+    res.json({prompt: choice});
 });
 
 // -- img routes -------------------------------------
@@ -295,6 +352,7 @@ app.get("/post-new-group", (req, res) => {
         member_ids: [userId],
         owner_id: userId,
         challenges: [{
+            contributors: [],
             prompt: initialPrompt,
             start_date: Date.now(),
             end_date: Date.now() + 604800000,
@@ -304,6 +362,32 @@ app.get("/post-new-group", (req, res) => {
     });
 
     res.status(200).send("Success");
+});
+
+app.get("/post-new-prompt", (req, res) => {
+    const db = getDb();
+    const userId = Number(req.query.auth);
+    const groupId = Number(req.query.groupId);
+    const prompt = req.query.prompt;
+
+    if (!(userId > 0)) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+    if (!(groupId > 0)) {
+        res.status(400).send("Invalid group id");
+        return;
+    }
+
+    const group = db.groups.find(group => group.id === groupId);
+    group.challenges.push({
+        contributors: [],
+        prompt: prompt,
+        start_date: Date.now(),
+        end_date: Date.now() + 604800000,
+        id: getNextId(group.challenges),
+        submissions: [],
+    });
 });
 
 app.get("/post-cast-vote", (req, res) => {
@@ -331,6 +415,31 @@ app.get("/post-cast-vote", (req, res) => {
     }
 
     res.status(200).send("All good");
+});
+
+// used for joining on a link, this endpoint does not create a link
+app.get("/post-use-join-link", (req, res) => {
+    const db = getDb();
+    const userId = Number(req.query.auth);
+    const groupId = Number(req.query.groupId);
+
+    if (!(userId > 0)) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+
+    if (!(groupId > 0)) {
+        res.status(400).send("Invalid groupId");
+        return;
+    }
+
+    const group = db.groups.find(group => group.id === groupId);
+    if (group.member_ids.includes(userId)) {
+        res.status(208).send("Already a member");
+    } else {
+        group.member_ids.push(userId);
+        res.status(200).send("Joined group");
+    }
 });
 
 // ---------------------------------------------------

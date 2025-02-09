@@ -31,11 +31,11 @@ const GroupList = ({ myGroups, authToken }) => {
   return (
     <div className="space-y-4 w-full m-auto justify-center pt-[50px] bg-gray-100 min-h-screen">
       <h1 className="text-center text-2xl mt-[50px]">{myGroups ? "Your Groups" : "Explore groups in your community..."}</h1>
-      {myGroups && <NavLink to="/create-group"
-            className={`flex items-center justify-between m-auto m-auto w-full py-2 rounded-lg transition duration-300 bg-blue-500 max-w-[500px] mb-[15px] hover:bg-blue-600 text-white cursor-pointer`}
+      {myGroups && <div className='flex justify-center align-middle'><NavLink to="/create-group"
+            className={`flex flex-1 items-center justify-between mx-4 py-2 rounded-lg transition duration-300 bg-blue-500 max-w-[500px] mb-[15px] hover:bg-blue-600 text-white cursor-pointer`}
           >
             <p className="w-full text-center">Create a Group</p>
-      </NavLink>}
+      </NavLink></div>}
       {groups.map((group, index) => (
         <GroupEntry key={index} id={group.id} groupName={group.name} joined={myGroups} numPeople={group.memberCount} />
       ))}
