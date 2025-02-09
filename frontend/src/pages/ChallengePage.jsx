@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import backend from "../backend.js";
+import placeholder from "../assets/placeholder.png"
 
 const ChallengePage = ({auth}) => {
   const location = useLocation();
@@ -12,12 +13,30 @@ const ChallengePage = ({auth}) => {
 
   const navigate = useNavigate();
 
-  const [currentSubmission, setSubmission] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(placeholder);
+
+  const [groupData, setGroupData] = useState({
+    name: "Group",
+    memberIds: [1]
+  });
+
+  async function fetchGroup () {
+    var res = await backend.get(`/group-data?groupId=${groupId}`)
+    
+    console.log(res)
+    setGroupData(res.data[0])
+  }
+
+  const [leaderboard, setLeaderboard] = useState([
+    {name: "Tony", score: 5},
+    {name: "Berry", score: 4},
+    {name: "Alex", score: 3},
+    {name: "BadPlayer", score: 2},
+    {name: "TerriblePlayer", score: 1}])
 
   useEffect(() => {
-    console.log(groupId)
-  })
+    fetchGroup()
+  }, [])
 
   const handleFileChange = (event) => {
 
@@ -28,7 +47,7 @@ const ChallengePage = ({auth}) => {
       const formData = new FormData();
       formData.append("file", selectedFile);
       console.log("Now sending picture");
-      backend.post(`/challenge-submission?auth=${auth}`, formData, {
+      backend.post(`/challenge-submission?auth=${auth}&groupId=${groupId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
           "Accept": "multipart/form-data",
@@ -36,7 +55,6 @@ const ChallengePage = ({auth}) => {
       }).then((res) => {
         console.log(`Uploaded img: ${res}`);
       });
-      setSubmission(selectedFile);
 
       // Create a URL for the selected image file and set it in state
       const reader = new FileReader();
@@ -48,7 +66,7 @@ const ChallengePage = ({auth}) => {
   };
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen">
+    <div className="p-4 bg-gray-100 min-h-screen z-[-5]">
       <div className="max-w-2xl mx-auto transition-all duration-300 bg-white mt-[70px] rounded-lg shadow-md p-6 relative">
         {/* Settings Button */}
         <button className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700">
@@ -74,8 +92,8 @@ const ChallengePage = ({auth}) => {
           </svg>
         </button>
 
-        <h1 className="text-2xl font-bold text-gray-800">John's Group</h1>
-        <p className="text-sm text-gray-600">5 Members | Minneapolis, MN</p>
+        <h1 className="text-2xl font-bold text-gray-800">{groupData.name}</h1>
+        <p className="text-sm text-gray-600">{groupData.memberIds.length} Members | Minneapolis, MN</p>
 
         <div className="mt-6">
           <div className="flex border-b border-gray-200">
@@ -113,7 +131,7 @@ const ChallengePage = ({auth}) => {
 
                 {imageUrl && (
                   <div className="mt-4">
-                    <p>Your current submission</p>
+                    {/* <p>{imageUrl == placeholder ? "Please submit a photo" : "Your current submission"}</p> */}
                     <img
                       src={imageUrl}
                       alt="Selected preview"
@@ -134,7 +152,7 @@ const ChallengePage = ({auth}) => {
                     htmlFor="fileInput"
                     className="px-4 py-2 w-full bg-blue-500 text-center text-white rounded-md cursor-pointer"
                   >
-                    {!imageUrl ? "Submit a Photo" : "Replace Submission"}
+                    {(!imageUrl || imageUrl == placeholder) ? "Submit a Photo" : "Replace Submission"}
                   </label>
                   <input
                     type="file"
@@ -186,15 +204,32 @@ const ChallengePage = ({auth}) => {
                 <p className="text-gray-600">
                   Most recent winner: {"Alex"}
                 </p>
-                <p>
-                  1. Tony - 500 points
-                </p>
-                <p>
-                  2. Aarush - 500 points
-                </p>
-                <p>
-                  3. Alex - 500 points
-                </p>
+
+                {
+                  leaderboard.map((val, idx) => {
+                    const maxScore = Math.max(...leaderboard.map(entry => entry.score)); // Get max score
+                    const progressWidth = (val.score / maxScore) * 100; // Calculate width percentage
+                    const color = (idx == 0 ? "#F4CE50" : (idx == 1 ? "#C9D5DC" : (idx == 2 ? "#DAA958" : "#E5E7EB")))
+                    const emoji = (idx == 0 ? "🥇" : (idx == 1 ? "🥈" : (idx == 2 ? "🥉" : "")))
+                    
+                    return (
+                      <div key={idx} className="relative w-full m-[2px] p-[2px]">
+                        {/* Background progress bar */}
+                        <div className="absolute left-0 top-0 h-full bg-gray-100 rounded-md" style={{ width: "100%" }}></div>
+                        <div 
+                          className={`absolute left-0 top-0 h-full rounded-md`}
+                          style={{ width: `${progressWidth}%`, background: `${color}` }} // Dynamic width
+                        ></div>
+
+                        {/* Text content */}
+                        <div className="relative flex justify-between w-full px-[5px] py-[2px] text-black">
+                          <span>{emoji == "" ? idx + 1 + "." : emoji } {val.name}</span>
+                          <span>{val.score} points</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                }
 
                 <div className="mt-6">
                     <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">

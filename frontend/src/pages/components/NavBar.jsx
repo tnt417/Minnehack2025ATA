@@ -12,7 +12,7 @@ function NavBar() {
     const location = useLocation();
 
   return (
-    <div className="fixed h-[50px] bg-[#FFBF00] w-full shadow-xl flex items-center">
+    <div className="fixed h-[50px] bg-[#FFBF00] w-full shadow-xl flex items-center z-[5]">
       <div className="flex w-full h-full justify-left">
         <img className="ml-[10px] h-full" src={logoPic}></img>
         {location.pathname == "/" || navLinks.map((link) => (

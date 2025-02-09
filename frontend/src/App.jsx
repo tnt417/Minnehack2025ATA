@@ -18,7 +18,11 @@ function App() {
   const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
-    console.log("isLoggedIn: " + isLoggedIn())
+    const at = sessionStorage.getItem("authToken")
+
+    console.log(at)
+
+    if(at) setAuthToken(at)
   }, [])
 
   return (
@@ -26,7 +30,12 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={isLoggedIn() ? <Navigate to="/my-groups"/> : <SignupLogin setAuthToken={setAuthToken}/>} />
+        <Route path="/auth" element={isLoggedIn() ? <Navigate to="/my-groups"/> : <SignupLogin setAuthToken={
+          (token) => {
+            setAuthToken(token);
+            sessionStorage.setItem("authToken", token);
+          }
+          }/>} />
         <Route path="/explore-groups" element={isLoggedIn() ? <GroupList myGroups={false} authToken={authToken}/> : <Navigate to="/auth"/>} />
         <Route path="/my-groups" element={isLoggedIn() ? <GroupList myGroups={true} authToken={authToken}/> : <Navigate to="/auth"/>} />
         <Route path="/create-group" element={isLoggedIn() ? <CreateGroup /> : <Navigate to="/auth"/>} />

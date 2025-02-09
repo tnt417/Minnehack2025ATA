@@ -3,14 +3,11 @@ import React, { useState } from "react";
 export default function CreateGroup() {
   const [formData, setFormData] = useState({
     groupName: "",
-    timeLength: "",
-    groupType: "public", // Default to public
-    password: "", // Only required if private
+    initialPrompt: "",
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormData({
       ...formData,
       [name]: value,
@@ -18,18 +15,9 @@ export default function CreateGroup() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
     console.log("Form Data Submitted:", formData);
-    // Add your submission logic here
-  };
-
-  const validateData = () => {
-    // Basic validation: Ensure groupName and timeLength are filled
-    return (
-      formData.groupName.trim() !== "" &&
-      formData.timeLength.trim() !== "" &&
-      (formData.groupType === "public" || formData.password.trim() !== "")
-    );
+    // Add submission logic here
   };
 
   return (
@@ -56,59 +44,21 @@ export default function CreateGroup() {
             />
           </div>
 
-          {/* Time Length (Days) */}
+          {/* Initial Prompt */}
           <div className="mb-4">
-            <label htmlFor="timeLength" className="block mb-1 text-maroon">
-              Time Length (Days)
+            <label htmlFor="initialPrompt" className="block mb-1 text-maroon">
+              Initial Prompt
             </label>
-            <input
-              type="number"
-              id="timeLength"
-              name="timeLength"
-              value={formData.timeLength}
+            <textarea
+              id="initialPrompt"
+              name="initialPrompt"
+              value={formData.initialPrompt}
               onChange={handleChange}
               className="border border-maroon_dark rounded px-3 py-2 w-full"
-              placeholder="Enter time length in days"
-              min="1"
+              placeholder="Enter initial prompt"
               required
             />
           </div>
-
-          {/* Public/Private Dropdown */}
-          <div className="mb-4">
-            <label htmlFor="groupType" className="block mb-1 text-maroon">
-              Public/Private
-            </label>
-            <select
-              id="groupType"
-              name="groupType"
-              value={formData.groupType}
-              onChange={handleChange}
-              className="border border-maroon_dark rounded px-3 py-2 w-full"
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </div>
-
-          {/* Password (Conditional Rendering for Private Groups) */}
-          {formData.groupType === "private" && (
-            <div className="mb-4">
-              <label htmlFor="password" className="block mb-1 text-maroon">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="border border-maroon_dark rounded px-3 py-2 w-full"
-                placeholder="Enter password for private group"
-                required={formData.groupType === "private"}
-              />
-            </div>
-          )}
 
           {/* Submit Button */}
           <div>
