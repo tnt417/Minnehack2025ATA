@@ -54,12 +54,12 @@ export default function GroupInfo()
 
         <h3 className="text-lg text-gray-600 mb-2">Invite Link</h3>
         <a
-          href={`http://localhost:5173/join?groupId=${groupId}`}
+          href={`http://minnehack2025-ata.vercel.app/join?groupId=${groupId}`}
           className="text-blue-600 font-medium break-all hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          http://localhost:5173/join?groupId={groupId}
+          http://minnehack2025-ata.vercel.app/join?groupId={groupId}
         </a>
       </div>
     </div>);
