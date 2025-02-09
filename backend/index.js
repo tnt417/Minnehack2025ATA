@@ -35,10 +35,9 @@ app.get("/signup", (req, res) => {
 app.get("/login", (req, res) => {
     const email = req.query.email;
     const password = req.query.password;
-    console.log(`Trying to log in ${email} with ${password}`)
-    const userId = login(email, password);
-    if (userId) {
-        res.status(200).send(`${userId}`);
+    const authToken = login(email, password);
+    if (authToken) {
+        res.status(200).json({auth: authToken});
     } else {
         res.status(400).send("Nope");
     }
