@@ -17,6 +17,7 @@
     {
       "name": "UMN",
       "location": "Campus",
+      "id": 1,
       "member_ids": [
         1,
         2
