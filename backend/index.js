@@ -96,6 +96,26 @@ app.get("/current-submission", (req, res) => {
     res.json({image_name: submission ? submission.image_name : null});
 })
 
+app.get("/last-winner", (req, res) => {
+    const groupId = Number(req.query.groupId);
+    const db = getDb();
+
+    if (!(groupId > 0)) {
+        res.status(400).send("Invalid group id");
+        return;
+    }
+
+    const challenges = db.groups.find(group => group.id === groupId).challenges
+    if (challenges.length < 2) {
+        res.status(200).send(null);
+    } else {
+        const challenge = challenges[challenges.length - 2];
+        const winner = getWinner(challenge);
+        const name = db.users.find(user => user.id === winner);
+        res.status(200).json({name: name});
+    }
+});
+
 // gets list of all past challenges for history page
 app.get("/past-challenges", (req, res) => {
     const groupId = Number(req.query.groupId);
@@ -183,8 +203,7 @@ app.get("/my-groups", (req, res) => {
         }));
 
     res.status(200).json(data);
-}
-)
+})
 
 
 //(auth: your token) -> group id & name & membercount[]
