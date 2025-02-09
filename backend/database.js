@@ -115,10 +115,16 @@ function getNextId(arr) {
 
 // takes in challenge, returns id of user with highest votes
 function getWinner(challenge) {
-    const db = getDb();
-    for(let i = 0; i < db.groups.challenges.length; i++){
-        if(challenge === db.groups.challenges[i].prompt){
-            
+    data = []
+    const submissions = challenge.submissions;
+    max_id = challenge.submissions[0].user_id;
+    max_votes = challenges.submissions[0].votes;
+    for(let i = 0; i < challenge.submissions.length; i++){
+        if(challenge.submissions[i].votes > max_votes){
+            max_votes = challenge.submissions[i].votes;
+            max_id = challenge.submissions[i].user_id;
         }
     }
+
+    return max_id;
 }
