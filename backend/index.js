@@ -72,7 +72,7 @@ app.get("/current_challenge", (req, res) => {
     }
 })
 
-app.get("/leaderboard", (req, res) => {
+app.get("/past-challenges", (req, res) => {
     const groupId = Number(req.query.groupId);
     if(typeof groupId == "number"){
         const db = getDb();
@@ -90,9 +90,101 @@ app.get("/leaderboard", (req, res) => {
     }
     
 )
+
+
+//(auth: your token) -> group id & name & membercount[]
+app.get("/my-groups", (req, res) => {
+    const auth = req.query.auth;
+    if(typeof auth != "string"){
+        res.status(400).send("Invalid Input")
+    }
+    const userId = authUser(auth);
+    if(!userId){
+        res.status(400).send("Invalid Input");
+    }
+
+    const db = getDb();
+    const data = [];
+    for(let i = 0; i < db.groups.length; i++){
+        if(userId in db.groups[i].member_ids){
+            data.push({
+                id: db.groups[i].id,
+                name: db.groups[i].name,
+                memberCount: db.groups[i].member_ids.length
+            })
+        }
+    }
+    res.status(200).json(data);
+}
+)
+
+
+//(auth: your token) -> group id & name & membercount[]
+app.get("/all-groups", (req, res) => {
+    const auth = req.query.auth;
+    if(typeof auth != "string"){
+        res.status(400).send("Invalid Input")
+        return;
+    }
+
+    const userId = authUser(auth);
+    if(!userId){
+        res.status(400).send("Not logged in");
+        return;
+    }
+
+    const db  = getDb();
+    const data = []
+    for(let i = 0; i < db.groups.length; i++){
+        // names.push(db.groups[i].name);
+        data.push({
+            id: db.groups[i].id,
+            name: db.groups[i].name,
+            memberCount: db.groups[i].member_ids.length
+        })
+    }
+    res.status(200).json(data);
+})
+
+
+
+//(groupId: string) -> group data json object
+app.get("/group-data", (req, res) => {
+    const groupId = Number(req.query.groupId);
+    if(groupId <= 0){
+        res.status(400).send("Invalid Input");
+        return;
+    }
+
+    const db = getDb();
+    const data = [];
+    for(let i = 0; i < db.groups.length; i++){
+        console.log(typeof db.groups[i].id);
+        if(groupId === db.groups[i].id){
+            data.push({
+                name: db.groups[i].name,
+                id: db.groups[i].id,
+                memberIds: db.groups[i].member_ids,
+                challenges: db.groups[i].challenges
+            })
+        }
+    }
+    res.status(200).json(data);
+})
+
+
+//(groupId: string) -> name & scores[]
+app.get("/leaderboard", (req, res) => {
+    const groupId = req.query.groupId;
+    
+})
+
 // ---------------------------------------------------
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
+process.on("SIGINT", () => {
+    saveDb(true);
+});
