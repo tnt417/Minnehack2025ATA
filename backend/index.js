@@ -176,7 +176,33 @@ app.get("/group-data", (req, res) => {
 //(groupId: string) -> name & scores[]
 app.get("/leaderboard", (req, res) => {
     const groupId = req.query.groupId;
+    if(groupId != "String"){
+        res.status(400).send("Invalid Input");
+    }
+
+    const db = getDb();
+    const challenges = db.groups.find(group => group.id === groupId).challenges;
+
+    // loop over challenges
+    // for each challenge: getWinner(challenge)
+
+    const wins = {
+        userId: wins
+    };
+
+    // for each, userId in wins
+        // wins[+=1]
+        // else, set to 1
+
     
+    const winners = []
+    for(let i = 0; i < db.groups.length; i++){
+        if(db.groups[i].id === groupId){
+            for(let j = 0; j < db.groups.challenges.length; j++){
+                winners.push[getWinner(challenges[j])]
+            }
+        }
+    }
 })
 
 // ---------------------------------------------------
