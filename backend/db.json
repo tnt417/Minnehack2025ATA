@@ -31,10 +31,9 @@
       "location": "Stadium Village",
       "id": 2,
       "member_ids": [
-        1,
         2
       ],
-      "owner_id": 1,
+      "owner_id": 2,
       "contributors": [
         1
       ],
@@ -88,7 +87,6 @@
       "location": "McNamara Alumini Center",
       "id": 3,
       "member_ids": [
-        1,
         2,
         3,
         4
