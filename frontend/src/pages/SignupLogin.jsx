@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import backend from "../backend";
 
-function SignupLogin() {
+function SignupLogin({setAuthToken}) {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(true);
 
-  const isFormValid = displayName.trim() !== "" && email.trim() !== "" && password.trim() !== "";
+  const isFormValid = (!isSignUp || displayName.trim() !== "") && email.trim() !== "" && password.trim() !== "";
 
   async function doSignup() {
-    var res = await backend.get("/signup", {
-      email: email,
-      name: displayName,
-      password: password
-    })
+    var res = await backend.get(`/signup?email=${email}&name=${displayName}&password=${password}`)
 
     console.log(res)
+  }
+
+  async function doLogin() {
+    var res = await backend.get(`/login?email=${email}&password=${password}`)
+
+    setAuthToken(res.data.auth)
   }
 
   // Handle form submission
@@ -33,7 +35,7 @@ function SignupLogin() {
       doSignup()
       // Add your signup API call or logic here
     } else {
-      
+      doLogin()
       // Add your login API call or logic here
     }
 
@@ -61,7 +63,7 @@ function SignupLogin() {
               />
           </div>
 
-          <div className="mb-4">
+          {isSignUp && <div className="mb-4">
             <label className="block text-gray-700 font-medium">Display Name</label>
             <input
               type="text"
@@ -70,7 +72,7 @@ function SignupLogin() {
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
             />
-          </div>
+          </div>}
 
           <div className="mb-4">
             <label className="block text-gray-700 font-medium">Password</label>

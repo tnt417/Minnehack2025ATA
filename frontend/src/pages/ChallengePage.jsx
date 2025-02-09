@@ -3,9 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 const ChallengePage = () => {
   const [activeTab, setActiveTab] = useState('challenge');
-  const [phase, setPhase] = useState("judging"); // judging / submission
+  const [phase, setPhase] = useState("judging"); // judging / submission / intermission
 
   const navigate = useNavigate();
+
+  const [preview, setPreview] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file)); // Create a preview URL
+    }
+  };
 
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
@@ -72,19 +81,34 @@ const ChallengePage = () => {
                 </p>
 
                 <div className="mt-6">
-                    <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
-                        Submit Your Photo
-                    </button>
-                </div>
+      <form id="uploadForm">
+        <input
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+          type="file"
+          name="imageFile"
+          accept="image/*"
+          onChange={handleFileChange} // Handle file selection
+        />
+        {preview && (
+          <div className="mt-4">
+            <p className="text-gray-700">Image Preview:</p>
+            <img src={preview} alt="Preview" className="w-full max-w-xs rounded-lg shadow-md" />
+          </div>
+        )}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4"
+        >
+          Submit Your Photo
+        </button>
+      </form>
+    </div>
               </div>
             )}
             {activeTab === 'challenge' && phase == "judging" && (
               <div>
                 <p className="text-gray-600">
-                  Submission is over! Time to judge the prompt:
-                </p>
-                <p className="text-lg font-bold text-gray-800">
-                  Take a photo of the coolest stick you can find in Minneapolis
+                  Submission is over! Time to judge the prompt.
                 </p>
 
                 <div className="mt-6">
@@ -92,6 +116,21 @@ const ChallengePage = () => {
                         Judge Photos
                     </button>
                 </div>
+              </div>
+            )}
+            {activeTab === 'challenge' && phase == "intermission" && (
+              <div>
+                <p className="text-gray-600">
+                  The results are in... The winner of this challenge is Alex
+                </p>
+
+                <p className="text-gray-600">
+                  The prompt was cool sticks
+                </p>
+
+                <p className="text-gray-600">
+                  PHOTO GOES HERE
+                </p>
               </div>
             )}
           </div>
