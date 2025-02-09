@@ -27,8 +27,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={isLoggedIn() ? <Navigate to="/my-groups"/> : <SignupLogin setAuthToken={setAuthToken}/>} />
-        <Route path="/explore-groups" element={isLoggedIn() ? <GroupList myGroups={false}/> : <Navigate to="/auth"/>} />
-        <Route path="/my-groups" element={isLoggedIn() ? <GroupList myGroups={true}/> : <Navigate to="/auth"/>} />
+        <Route path="/explore-groups" element={isLoggedIn() ? <GroupList myGroups={false} authToken={authToken}/> : <Navigate to="/auth"/>} />
+        <Route path="/my-groups" element={isLoggedIn() ? <GroupList myGroups={true} authToken={authToken}/> : <Navigate to="/auth"/>} />
         <Route path="/create-group" element={isLoggedIn() ? <CreateGroup /> : <Navigate to="/auth"/>} />
         <Route path="/challenge" element={isLoggedIn() ? <ChallengePage auth={authToken} /> : <Navigate to="/auth"/>} />
         <Route path="/judge" element={isLoggedIn() ? <JudgingPage /> : <Navigate to="/auth"/>} />

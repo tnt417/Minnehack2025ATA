@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import backend from "../backend.js";
 
 const ChallengePage = ({auth}) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const groupId = queryParams.get('groupId');
+
   const [activeTab, setActiveTab] = useState('challenge');
   const [phase, setPhase] = useState("submission"); // judging / submission / intermission
 
@@ -10,6 +14,10 @@ const ChallengePage = ({auth}) => {
 
   const [currentSubmission, setSubmission] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    console.log(groupId)
+  })
 
   const handleFileChange = (event) => {
 

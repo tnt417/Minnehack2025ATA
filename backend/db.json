@@ -4,13 +4,13 @@
       "name": "wublin",
       "email": "aarush@gmail.com",
       "password": "something",
-      "id": "1"
+      "id": 1
     },
     {
       "name": "Alex",
       "email": "alex@gmail.com",
       "password": "wow",
-      "id": "2"
+      "id": 2
     }
   ],
   "groups": [

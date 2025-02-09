@@ -8,6 +8,7 @@ const GroupList = ({myGroups, authToken}) => {
   ]);
 
   async function fetchGroups () {
+    console.log("Auth token: ", authToken)
     if(myGroups){
       var res = await backend.get(`/my-groups?auth=${authToken}`)
       setGroups(res.data)
@@ -29,7 +30,7 @@ const GroupList = ({myGroups, authToken}) => {
     <div className="space-y-4 w-full m-auto justify-center pt-[50px] bg-gray-100 min-h-screen">
     <h1 className="text-center text-2xl mt-[50px]">{myGroups ? "Your Groups" : "Explore groups in your community..."}</h1>
     {groups.map((group, index) => (
-        <GroupEntry key={index} groupName={group.name} joined={myGroups} numPeople={group.memberCount} />
+        <GroupEntry key={index} id={group.id} groupName={group.name} joined={myGroups} numPeople={group.memberCount} />
     ))}
     </div>
   );
