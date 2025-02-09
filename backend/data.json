@@ -43,7 +43,7 @@
                     "contributors": [
                         1
                     ],
-                    "prompt": "Best Golden Gopher costume",
+                    "prompt": "Coolest Cloud seen from Campus",
                     "start_date": 1738368000000,
                     "end_date": 1738886400000,
                     "id": 1,
@@ -63,7 +63,7 @@
                     ]
                 },
                 {
-                    "prompt": "Best U of M landmark photo",
+                    "prompt": "Best meal on Campus",
                     "start_date": 1738972800000,
                     "end_date": 1739577600000,
                     "submissions": [
@@ -106,7 +106,7 @@
                         3,
                         4
                     ],
-                    "prompt": "Most valuable UofM object",
+                    "prompt": "Sickest street art or graffiti",
                     "start_date": 1737676800000,
                     "end_date": 1738281600000,
                     "id": 6,
