@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ChallengePage = () => {
   const [activeTab, setActiveTab] = useState('challenge');
+  const [phase, setPhase] = useState("judging"); // judging / submission
+
+  const navigate = useNavigate();
 
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
@@ -53,18 +57,18 @@ const ChallengePage = () => {
               }`}
               onClick={() => setActiveTab('standings')}
             >
-              Standings
+              Leaderboard
             </button>
           </div>
 
           <div className="mt-4">
-            {activeTab === 'challenge' && (
+            {activeTab === 'challenge' && phase == "submission" && (
               <div>
                 <p className="text-gray-600">
                   Your prompt is...
                 </p>
                 <p className="text-lg font-bold text-gray-800">
-                  Take a photo of the coolest stick you can find.
+                  Take a photo of the coolest stick you can find in Minneapolis
                 </p>
 
                 <div className="mt-6">
@@ -74,18 +78,48 @@ const ChallengePage = () => {
                 </div>
               </div>
             )}
+            {activeTab === 'challenge' && phase == "judging" && (
+              <div>
+                <p className="text-gray-600">
+                  Submission is over! Time to judge the prompt:
+                </p>
+                <p className="text-lg font-bold text-gray-800">
+                  Take a photo of the coolest stick you can find in Minneapolis
+                </p>
 
+                <div className="mt-6">
+                    <button onClick={() => {navigate("/judge")}} className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                        Judge Photos
+                    </button>
+                </div>
+              </div>
+            )}
+          </div>
             {activeTab === 'standings' && (
               <div>
                 <p className="text-gray-600">
-                  Standings will be displayed here.
+                  Most recent winner: {"Alex"}
                 </p>
+                <p>
+                  1. Tony - 500 points
+                </p>
+                <p>
+                  2. Aarush - 500 points
+                </p>
+                <p>
+                  3. Alex - 500 points
+                </p>
+
+                <div className="mt-6">
+                    <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                        View all challenges
+                    </button>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -10,9 +10,9 @@ const GroupList = ({myGroups}) => {
 
   return (
     <div className="space-y-4 w-full m-auto justify-center pt-[50px] bg-gray-100 min-h-screen">
-    <h1 className="text-center text-2xl mt-[50px]">{myGroups ? "Your Groups" : "Explore groups near you"}</h1>
+    <h1 className="text-center text-2xl mt-[50px]">{myGroups ? "Your Groups" : "Explore groups in your community..."}</h1>
     {groups.map((group, index) => (
-        <GroupEntry key={index} groupName={group.groupName} numPeople={group.numPeople} />
+        <GroupEntry key={index} groupName={group.groupName} joined={myGroups} numPeople={group.numPeople} />
     ))}
     </div>
   );

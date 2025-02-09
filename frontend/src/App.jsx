@@ -6,6 +6,7 @@ import GroupList from "./pages/GroupList"
 import CreateGroup from "./pages/CreateGroup"
 import ChallengePage from "./pages/ChallengePage"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import JudgingPage from './pages/JudgingPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/my-groups" element={<GroupList myGroups={true}/>} />
         <Route path="/create-group" element={<CreateGroup />} />
         <Route path="/challenge" element={<ChallengePage />} />
+        <Route path="/judge" element={<JudgingPage />} />
       </Routes>
     </Router>
   );
