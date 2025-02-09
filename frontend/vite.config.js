@@ -8,4 +8,11 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: "/", // Ensure base is set properly
+  build: {
+    outDir: "dist",
+  },
+  server: {
+    historyApiFallback: true, // Ensures client-side routing works
+  },
 })
