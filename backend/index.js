@@ -63,7 +63,6 @@ app.get("/logout", (req, res) => {
 
 app.get("/current_challenge", (req, res) => {
     const groupId = Number(req.query.groupId);
-    console.log(typeof groupId);
     if (typeof groupId === "number"){
         const db = getDb();
         const group = db.groups.find(group => group.id == groupId)
@@ -213,8 +212,9 @@ app.get("/leaderboard", (req, res) => {
 app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
     console.log("Picture route hit");
     const db = getDb();
-    const fileName = req.file.fileName;
+    const fileName = req.file.filename;
     const authToken = Number(req.query.auth);
+    const groupId = Number(req.query.groupId);
     const userId = authUser(authToken);
 
     console.log("Saved file:", fileName);
@@ -223,9 +223,26 @@ app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
         res.status(400).send("Not logged in");
         return;
     }
+    if (!(groupId) > 0) {
+        res.status(400).send("Invalid group id");
+        return;
+    }
 
-    //todo: get current challenge
-    //todo: update current challenge, add or swap submission
+    const group = db.groups.find(group => group.id === groupId);
+    const challenge = group.challenges[group.challenges.length - 1];
+
+    const existingEntry = challenge.submissions.find(submission => submission.user_id === userId);
+
+    if (existingEntry) {
+        existingEntry.image_name = fileName;
+    } else {
+        challenge.submissions.push({
+            user_id: userId,
+            votes: 0,
+            image_name: fileName,
+            id: getNextId(challenge.submissions),
+        });
+    }
 
     res.status(200).send("File uploaded");
 })

@@ -33,12 +33,14 @@
             {
               "user_id": 1,
               "votes": 10,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 15,
-              "id": 2
+              "id": 2,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         },
@@ -50,12 +52,14 @@
             {
               "user_id": 1,
               "votes": 20,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 25,
-              "id": 2
+              "id": 2,
+              "image_name": "325ede4516d4de7ab824b96422407c69"
             }
           ]
         }
@@ -80,12 +84,14 @@
             {
               "user_id": 1,
               "votes": 30,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 35,
-              "id": 2
+              "id": 2,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         },
@@ -97,12 +103,14 @@
             {
               "user_id": 1,
               "votes": 40,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 45,
-              "id": 2
+              "id": 2,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         }
@@ -127,12 +135,14 @@
             {
               "user_id": 1,
               "votes": 20,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 25,
-              "id": 2
+              "id": 2,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         },
@@ -144,12 +154,14 @@
             {
               "user_id": 1,
               "votes": 30,
-              "id": 1
+              "id": 1,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             },
             {
               "user_id": 2,
               "votes": 35,
-              "id": 2
+              "id": 2,
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         }
