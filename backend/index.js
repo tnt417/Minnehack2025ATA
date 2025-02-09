@@ -138,17 +138,25 @@ app.get("/all-groups", (req, res) => {
     }
 
     const db  = getDb();
-    const data = []
-    for(let i = 0; i < db.groups.length; i++){
-        // names.push(db.groups[i].name);
-        data.push({
-            id: db.groups[i].id,
-            name: db.groups[i].name,
-            memberCount: db.groups[i].member_ids.length
-        })
-    }
+    const data = db.groups
+        .filter(group => !group.member_ids.contains(userId))
+        .map(group => ({
+            id: group.id,
+            name: group.name,
+            memberCount: group.member_ids.length,
+        }));
+
+    // for(let i = 0; i < db.groups.length; i++){
+    //     // names.push(db.groups[i].name);
+    //     data.push({
+    //         id: db.groups[i].id,
+    //         name: db.groups[i].name,
+    //         memberCount: db.groups[i].member_ids.length
+    //     })
+    // }
+
     res.status(200).json(data);
-})
+});
 
 
 
