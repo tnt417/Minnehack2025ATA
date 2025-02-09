@@ -109,10 +109,10 @@ export function getNextId(arr) {
 
 // takes in challenge, returns id of user with highest votes
 export function getWinner(challenge) {
-    const data = []
-    const submissions = challenge.submissions;
-    const best_id = 1;
-    const highest_votes = 0;
+    let data = []
+    let submissions = challenge.submissions;
+    let best_id = 1;
+    let highest_votes = 0;
     for(let i = 0; i < challenge.submissions.length; i++){
         if(challenge.submissions[i].votes > highest_votes){
             highest_votes = challenge.submissions[i].votes;

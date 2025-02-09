@@ -7,7 +7,8 @@ import CreateGroup from "./pages/CreateGroup"
 import ChallengePage from "./pages/ChallengePage"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import JudgingPage from './pages/JudgingPage';
-import LandingPage from './pages/LandingPage';
+import GroupInfo from './pages/GroupInfo';
+import JoinGroup from './pages/JoinGroup';
 
 function App() {
   const isLoggedIn = () => {return authToken != ""}
@@ -19,8 +20,8 @@ function App() {
   const [userId, setUserId] = useState(-1);
 
   useEffect(() => {
-    const at = sessionStorage.getItem("authToken")
-    const uid = sessionStorage.getItem("userId")
+    const at = localStorage.getItem("authToken")
+    const uid = localStorage.getItem("userId")
 
     if(at) setAuthToken(at)
     if(uid) setUserId(uid)
@@ -35,8 +36,8 @@ function App() {
           (token, userId) => {
             setAuthToken(token);
             setUserId(userId);
-            sessionStorage.setItem("authToken", token);
-            sessionStorage.setItem("userId", userId);
+            localStorage.setItem("authToken", token);
+            localStorage.setItem("userId", userId);
           }
           }/>} />
         <Route path="/explore-groups" element={isLoggedIn() ? <GroupList myGroups={false} authToken={authToken}/> : <Navigate to="/auth"/>} />
@@ -44,6 +45,8 @@ function App() {
         <Route path="/create-group" element={isLoggedIn() ? <CreateGroup authToken={authToken} /> : <Navigate to="/auth"/>} />
         <Route path="/challenge" element={isLoggedIn() ? <ChallengePage auth={authToken} /> : <Navigate to="/auth"/>} />
         <Route path="/judge" element={isLoggedIn() ? <JudgingPage userId={userId}/> : <Navigate to="/auth"/>} />
+        <Route path="/group-info" element={isLoggedIn() ? <GroupInfo /> : <Navigate to="/auth"/>} />
+        <Route path="/join" element={<JoinGroup authToken={authToken} />} />
       </Routes>
     </Router>
   );

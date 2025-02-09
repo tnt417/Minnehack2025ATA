@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import backend from "../backend.js";
 import placeholder from "../assets/placeholder.png"
+import WeekManager from "../time.js"
 
 const ChallengePage = ({auth}) => {
   const location = useLocation();
@@ -27,8 +28,21 @@ const ChallengePage = ({auth}) => {
     
     console.log(res)
     setGroupData(res.data[0])
+
     var challenges = res.data[0].challenges;
-    setPrompt(challenges[challenges.length-1].prompt)
+    var curChallenge = challenges[challenges.length-1];
+
+    let timeManager = new WeekManager(curChallenge.start_date, curChallenge.end_date)
+
+    console.log(timeManager.getWeekProgress())
+    setPhase(timeManager.getWeekProgress())
+
+    setPrompt(curChallenge.prompt)
+
+    var ldb = await backend.get(`/leaderboard?groupId=${groupId}`)
+
+    console.log(ldb)
+    setLeaderboard(ldb.data)
   }
 
   async function fetchSubmission () {
@@ -37,6 +51,8 @@ const ChallengePage = ({auth}) => {
     })
 
     console.log(res.data.image_name)
+
+    if(res.data.image_name == null) return;
 
     //TODO: change when deploying
     setImageUrl("http://localhost:3000/" + res.data.image_name)
@@ -85,7 +101,7 @@ const ChallengePage = ({auth}) => {
     <div className="p-4 bg-gray-100 min-h-screen z-[-5]">
       <div className="max-w-2xl mx-auto transition-all duration-300 bg-white mt-[70px] rounded-lg shadow-md p-6 relative">
         {/* Settings Button */}
-        <button className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700">
+        <button onClick={() => {navigate(`/group-info?groupId=${groupId}`)}}className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -139,7 +155,7 @@ const ChallengePage = ({auth}) => {
             {activeTab === 'challenge' && phase == "submission" && (
               <div>
                 <p className="text-gray-600">
-                  Your prompt is...
+                  This week's prompt is...
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
                   {prompt}
@@ -239,7 +255,7 @@ const ChallengePage = ({auth}) => {
 
                         {/* Text content */}
                         <div className="relative flex justify-between w-full px-[5px] py-[2px] text-black">
-                          <span>{emoji == "" ? idx + 1 + "." : emoji } {val.name}</span>
+                          <span>{emoji == "" ? idx + 1 + "." : emoji } {val.name.name}</span>
                           <span>{val.score} points</span>
                         </div>
                       </div>

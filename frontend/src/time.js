@@ -1,4 +1,4 @@
-class WeekManager {
+export default class WeekManager {
     constructor(startTime, endTime) {
         const time = Date.now();
         this.startTime = startTime;
@@ -11,9 +11,9 @@ class WeekManager {
         const weekDuration = this.endTime - this.startTime;
         const progress = delta / weekDuration;
 
-        if (progress <= 4/7) {
+        if (progress <= 4.0/7.0) {
             return "submission";
-        } else if (progress <= 5/7) {
+        } else if (progress <= 5.0/7.0) {
             return "voting";
         } else {
             return "results";

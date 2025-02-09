@@ -20,7 +20,8 @@
       "id": 2,
       "member_ids": [
         1,
-        2
+        2,
+        57327596
       ],
       "owner_id": 1,
       "contributors": [
@@ -184,7 +185,8 @@
       "location": "idk",
       "id": 5,
       "member_ids": [
-        2
+        2,
+        57327596
       ],
       "owner_id": 2,
       "challenges": [

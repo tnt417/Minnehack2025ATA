@@ -454,7 +454,7 @@ app.get("/post-cast-vote", (req, res) => {
 // used for joining on a link, this endpoint does not create a link
 app.get("/post-use-join-link", (req, res) => {
     const db = getDb();
-    const userId = Number(req.query.auth);
+    const userId = Number(authUser(req.query.auth));
     const groupId = Number(req.query.groupId);
 
     if (!(userId > 0)) {
