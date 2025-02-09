@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import logoPic from "../../assets/Logo.png";
 
 const navLinks = [
   { to: '/explore-groups', text: 'Explore' },
@@ -7,20 +8,24 @@ const navLinks = [
 ];
 
 function NavBar() {
+
+    const location = useLocation();
+
   return (
-    <div className="h-[50px] bg-[#FFBF00] w-full shadow-xl flex items-center">
-      <div className="flex w-full justify-center space-x-8">
-        {navLinks.map((link) => (
+    <div className="fixed h-[50px] bg-[#FFBF00] w-full shadow-xl flex items-center">
+      <div className="flex w-full h-full justify-left">
+        <img className="ml-[10px] h-full" src={logoPic}></img>
+        {location.pathname == "/" || navLinks.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
             className={({ isActive }) =>
-              `text-lg font-semibold transition-all duration-300 ease-in-out px-[10px] pt-[2px] rounded-full
-              ${isActive ? 'border-b-4 border-black' : 'border-b-0'} 
-              hover:bg-white`
+              `text-lg text-white font-semibold h-full flex px-[10px] items-center justify-center transition-all duration-300 ease-in-out
+              ${isActive ? 'border-b-4 border-white' : 'border-b-0'} 
+              hover:bg-[#D9A300]`
             }
           >
-            {link.text}
+            <p>{link.text}</p>
           </NavLink>
         ))}
       </div>

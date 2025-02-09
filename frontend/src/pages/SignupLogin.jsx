@@ -8,7 +8,7 @@ function SignupLogin() {
   const isFormValid = username.trim() !== "" && password.trim() !== "";
 
   return (
-    <div className="flex justify-center items-center bg-gray-100 min-h-screen mt-[-50px] z-[-50]">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-semibold text-center mb-6">
           {isSignUp ? "Create Account" : "Log In"}

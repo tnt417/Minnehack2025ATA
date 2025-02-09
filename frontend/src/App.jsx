@@ -4,6 +4,7 @@ import SignupLogin from "./pages/SignupLogin";  // Example home component
 import NavBar from "./pages/components/NavBar"
 import GroupList from "./pages/GroupList"
 import CreateGroup from "./pages/CreateGroup"
+import ChallengePage from "./pages/ChallengePage"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
@@ -12,8 +13,10 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/" element={<SignupLogin />} />
-        <Route path="/explore-groups" element={<GroupList />} />
+        <Route path="/explore-groups" element={<GroupList myGroups={false}/>} />
+        <Route path="/my-groups" element={<GroupList myGroups={true}/>} />
         <Route path="/create-group" element={<CreateGroup />} />
+        <Route path="/challenge" element={<ChallengePage />} />
       </Routes>
     </Router>
   );
