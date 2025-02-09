@@ -3,12 +3,12 @@
       {
           "name": "Aarush",
           "email": "aarush@gmail.com",
-          "user_id": "1"
+          "id": "1"
       }, 
       {
           "name": "Alex",
           "email": "alex@gmail.com",
-          "user_id": "2"
+          "id": "2"
       }
   ],
   "groups": [
@@ -21,14 +21,17 @@
                   "prompt": "coolest stick",
                   "start_date": "1/1/2025",
                   "end_date": "1/7/2025",
+                  "id": 1,
                   "submissions": [
                       {
                           "user_id": 1,
-                          "votes": 15
+                          "votes": 15,
+                          "id": 1
                       },
                       {
                           "user_id": 2,
-                          "votes": 20
+                          "votes": 20,
+                          "id": 2
                       }
                   ]
               },
@@ -39,11 +42,13 @@
                   "submissions": [
                       {
                           "user_id": 1,
-                          "votes": 25
+                          "votes": 25,
+                          "id": 1
                       },
                       {
                           "user_id": 2,
-                          "votes": 30
+                          "votes": 30,
+                          "id": 2
                       }
                   ]
               }
