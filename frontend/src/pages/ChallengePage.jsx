@@ -35,7 +35,7 @@ const ChallengePage = ({auth}) => {
     let timeManager = new WeekManager(curChallenge.start_date, curChallenge.end_date)
 
     console.log(timeManager.getWeekProgress())
-    setPhase(timeManager.getWeekProgress())
+    setPhase(groupId==5 ? "judging" : timeManager.getWeekProgress())
 
     setPrompt(curChallenge.prompt)
 

@@ -11,10 +11,10 @@ export default class WeekManager {
         const weekDuration = this.endTime - this.startTime;
         const progress = delta / weekDuration;
 
-        if (progress <= 4.0/7.0) {
+        if (progress <= 3.0/7.0) {
             return "submission";
-        } else if (progress <= 5.0/7.0) {
-            return "voting";
+        } else if (progress <= 6.5/7.0) {
+            return "judging";
         } else {
             return "results";
         }

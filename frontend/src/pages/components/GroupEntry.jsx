@@ -6,6 +6,9 @@ const GroupEntry = ({ id, groupName, numPeople, joined }) => {
 
   const goto = () => {
     if(joined) { navigate(`/challenge?groupId=${id}`) }
+    else{
+      navigate(`/join?groupId=`+id)
+    }
   }
 
   return (
