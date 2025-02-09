@@ -73,6 +73,26 @@ app.get("/current_challenge", (req, res) => {
     else{
         res.status(400).send("Invalid Input")
     }
+});
+
+app.get("/current-submission", (req, res) => {
+    const userId = authUser(req.query.auth);
+    const groupId = Number(req.query.groupId);
+    const db = getDb();
+    if (!(userId > 0)) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+    if (!(groupId > 0)) {
+        res.status(400).send("Invalid group id");
+        return;
+    }
+
+    const group = db.groups.find(group => group.id === groupId);
+    const challenge = group.challenges[group.challenges.length - 1];
+    const submission = challenge.submissions.find(entry => entry.user_id === userId);
+
+    res.json({image_name: submission ? submission.image_name : null});
 })
 
 app.get("/past-challenges", (req, res) => {
