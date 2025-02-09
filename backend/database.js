@@ -54,7 +54,7 @@ export function signup(email, password, name) {
     return userId;
 }
 
-// returns userId on success, null on failure
+// returns auth token on success, null on failure
 export function login(email, password) {
     for (const entry of Object.values(SessionStore)) {
         if (entry.email === email) {
@@ -73,7 +73,7 @@ export function login(email, password) {
                 email: email,
                 password: password,
             };
-            return userId;
+            return token;
         }
     }
     console.log("No user found");
