@@ -57,12 +57,6 @@ export function signup(email, password, name) {
 
 // returns auth token on success, null on failure
 export function login(email, password) {
-    for (const entry of Object.values(SessionStore)) {
-        if (entry.email === email) {
-            console.log("Already logged in");
-            return null;
-        }
-    }
     for (const user of Object.values(getDb().users)) {
         console.log(`Checking ${user.email} with ${email} and ${user.password} with ${password}`)
         if (user.email === email && user.password === password) {
