@@ -13,7 +13,7 @@ import ResultsPage from './pages/ResultsPage';
 import backend from "./backend"
 
 function App() {
-  const isLoggedIn = () => {return authToken != "" && authToken != null}
+  const isLoggedIn = () => {return authToken != null && authToken != ""}
   // const isLoggedIn = () => true;
 
   //

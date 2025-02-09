@@ -8,7 +8,7 @@ const multUpload = multer({dest: "imgUploads/"});
 const app = express();
 app.use(cors());
 app.use(express.static("imgUploads"));
-const PORT = 3000;
+const PORT = 3456;
 
 // -- auth --------------------------------------------------
 
