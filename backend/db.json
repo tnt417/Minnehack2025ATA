@@ -178,6 +178,25 @@
           ]
         }
       ]
+    },
+    {
+      "name": "My new group",
+      "location": "idk",
+      "id": 5,
+      "member_ids": [
+        2
+      ],
+      "owner_id": 2,
+      "challenges": [
+        {
+          "contributors": [],
+          "prompt": "this is my new group",
+          "start_date": 1739114206028,
+          "end_date": 1739719006028,
+          "id": 1,
+          "submissions": []
+        }
+      ]
     }
   ]
 }

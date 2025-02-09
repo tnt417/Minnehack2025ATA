@@ -9,14 +9,16 @@ const GroupEntry = ({ id, groupName, numPeople, joined }) => {
   }
 
   return (
-    <div className="flex items-center justify-between mx-4 p-4 bg-white rounded-lg shadow-md mb-4 max-w-[500px]">
-      <div className="flex flex-col">
-        <span className="text-lg font-semibold">{groupName}</span>
-        <span className="text-sm text-gray-600">{numPeople} members</span>
+    <div className="flex items-center justify-center w-full">
+      <div className="flex w-full justify-between mx-4 p-4 bg-white rounded-lg shadow-md mb-4 max-w-[500px]">
+        <div className="flex flex-col">
+          <span className="text-lg font-semibold">{groupName}</span>
+          <span className="text-sm text-gray-600">{numPeople} members</span>
+        </div>
+        <button onClick={goto} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+          {joined ? "View" : "Join"}
+        </button>
       </div>
-      <button onClick={goto} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-        {joined ? "View" : "Join"}
-      </button>
     </div>
   );
 };

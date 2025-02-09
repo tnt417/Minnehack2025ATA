@@ -4,10 +4,9 @@ import logoPic from "../../assets/Logo.png";
 const navLinks = [
   { to: '/explore-groups', text: 'Explore' },
   { to: '/my-groups', text: 'My Groups' },
-  { to: '/profile', text: 'Profile' },
 ];
 
-function NavBar() {
+function NavBar({loggedIn}) {
 
     const location = useLocation();
 
@@ -15,7 +14,7 @@ function NavBar() {
     <div className="fixed h-[50px] bg-[#FFBF00] w-full shadow-xl flex items-center z-[5]">
       <div className="flex w-full h-full justify-left">
         <img className="ml-[10px] h-full" src={logoPic}></img>
-        {location.pathname == "/" || navLinks.map((link) => (
+        {location.pathname == "/auth" || location.pathname=="/" || navLinks.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
