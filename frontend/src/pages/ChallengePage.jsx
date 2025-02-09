@@ -3,22 +3,30 @@ import { useNavigate } from 'react-router-dom';
 
 const ChallengePage = () => {
   const [activeTab, setActiveTab] = useState('challenge');
-  const [phase, setPhase] = useState("judging"); // judging / submission / intermission
+  const [phase, setPhase] = useState("submission"); // judging / submission / intermission
 
   const navigate = useNavigate();
 
-  const [preview, setPreview] = useState(null);
+  const [currentSubmission, setSubmission] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setPreview(URL.createObjectURL(file)); // Create a preview URL
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setSubmission(selectedFile);
+
+      // Create a URL for the selected image file and set it in state
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result); // Set the image URL once the file is loaded
+      };
+      reader.readAsDataURL(selectedFile); // Read the file as a Data URL
     }
   };
 
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
-      <div className="max-w-2xl mx-auto bg-white mt-[70px] rounded-lg shadow-md p-6 relative">
+      <div className="max-w-2xl mx-auto transition-all duration-300 bg-white mt-[70px] rounded-lg shadow-md p-6 relative">
         {/* Settings Button */}
         <button className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700">
           <svg
@@ -49,7 +57,7 @@ const ChallengePage = () => {
         <div className="mt-6">
           <div className="flex border-b border-gray-200">
             <button
-              className={`flex-1 py-2 px-4 text-center ${
+              className={`flex-1 py-2 px-4 text-center transition-all duration-100 ${
                 activeTab === 'challenge'
                   ? 'border-b-2 border-blue-500 text-blue-500'
                   : 'text-gray-500 hover:text-gray-700'
@@ -59,7 +67,7 @@ const ChallengePage = () => {
               Challenge
             </button>
             <button
-              className={`flex-1 py-2 px-4 text-center ${
+              className={`flex-1 py-2 px-4 text-center transition-all duration-100 ${
                 activeTab === 'standings'
                   ? 'border-b-2 border-blue-500 text-blue-500'
                   : 'text-gray-500 hover:text-gray-700'
@@ -76,32 +84,47 @@ const ChallengePage = () => {
                 <p className="text-gray-600">
                   Your prompt is...
                 </p>
-                <p className="text-lg font-bold text-gray-800">
+                <p className="text-2xl font-bold text-gray-800">
                   Take a photo of the coolest stick you can find in Minneapolis
                 </p>
 
+                {imageUrl && (
+                  <div className="mt-4">
+                    <p>Your current submission</p>
+                    <img
+                      src={imageUrl}
+                      alt="Selected preview"
+                      className="min-w-full aspect-square object-contain shadow-lg rounded-md"
+                    />
+                  </div>
+                )}
+
                 <div className="mt-6">
-      <form id="uploadForm">
-        <input
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-          type="file"
-          name="imageFile"
-          accept="image/*"
-          onChange={handleFileChange} // Handle file selection
-        />
-        {preview && (
-          <div className="mt-4">
-            <p className="text-gray-700">Image Preview:</p>
-            <img src={preview} alt="Preview" className="w-full max-w-xs rounded-lg shadow-md" />
-          </div>
-        )}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 mt-4"
-        >
-          Submit Your Photo
-        </button>
-      </form>
+                <form
+                  id="submissionUploadForm"
+                  className="flex flex-col items-center w-full"
+                  action="/submit"
+                  method="post"
+                  encType="multipart/form-data"
+                >
+                  <label
+                    htmlFor="fileInput"
+                    className="px-4 py-2 w-full bg-blue-500 text-center text-white rounded-md cursor-pointer"
+                  >
+                    {!imageUrl ? "Submit a Photo" : "Replace Submission"}
+                  </label>
+                  <input
+                    type="file"
+                    name="file"
+                    id="fileInput"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  {/* Hidden submit button (automatically triggered) */}
+                  <button type="submit" className="hidden">
+                    Submit
+                  </button>
+                </form>
     </div>
               </div>
             )}
