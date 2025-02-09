@@ -32,8 +32,8 @@
             1
           ],
           "prompt": "Best Golden Gopher costume",
-          "start_date": 1739111240979,
-          "end_date": 1739123803937,
+          "start_date": "2/1/2025",
+          "end_date": "2/7/2025",
           "id": 1,
           "submissions": [
             {
@@ -52,8 +52,8 @@
         },
         {
           "prompt": "Best U of M landmark photo",
-          "start_date": 1739123803937,
-          "end_date": 1739211574798,
+          "start_date": "2/8/2025",
+          "end_date": "2/14/2025",
           "submissions": [
             {
               "user_id": 1,
@@ -86,8 +86,8 @@
             1
           ],
           "prompt": "Best skyline shot of Minneapolis",
-          "start_date": 1739111240979,
-          "end_date": 1739211574798,
+          "start_date": "2/15/2025",
+          "end_date": "2/21/2025",
           "id": 1,
           "submissions": [
             {
@@ -106,8 +106,8 @@
         },
         {
           "prompt": "Most creative use of Minneapolis public art",
-          "start_date": 1739123803937,
-          "end_date": 1739211574798,
+          "start_date": "2/22/2025",
+          "end_date": "2/28/2025",
           "submissions": [
             {
               "user_id": 1,
@@ -140,8 +140,8 @@
             1
           ],
           "prompt": "Create the most innovative tech prototype",
-          "start_date": 1739111240979,
-          "end_date": 1739211574798,
+          "start_date": "3/1/2025",
+          "end_date": "3/7/2025",
           "id": 1,
           "submissions": [
             {
@@ -160,8 +160,8 @@
         },
         {
           "prompt": "Most creative use of virtual reality",
-          "start_date": 1739123803937,
-          "end_date": 1739211574798,
+          "start_date": "3/8/2025",
+          "end_date": "3/14/2025",
           "submissions": [
             {
               "user_id": 1,
