@@ -325,6 +325,40 @@ app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
     res.status(200).send("File uploaded");
 })
 
+
+//(groupId: string) -> name & picture & votes[3]
+app.get("/challenge-result", (req, res) => {
+    const groupId = Number(req.query.groupId);
+    if(groupId <= 0){
+        res.status(400).send("Invalid Input");
+        return;
+    }
+
+    const db = getDb();
+    const group = db.groups.find(group => group.id === groupId);
+    const challenge = group.challenges[group.challenges.length-1];
+    const votes = []
+     for(let submission of challenge.submissions){
+        votes.push(Number(submission.votes))
+     }
+     votes.sort(function(a, b){return b-a}).slice(0, 3);
+     const data = []
+     for(let vote of votes){
+        for(let submission of challenge.submissions){
+            if(submission.votes === vote){
+                data.push({
+                    id: submission.user_id,
+                    picture: submission.image_name,
+                    votes: vote
+                })
+            }
+        }
+     }
+
+     res.status(200).json(data);
+
+})
+
 // -- fake post routes -------------------------------------------------
 
 app.get("/post-new-group", (req, res) => {
