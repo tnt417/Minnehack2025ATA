@@ -112,3 +112,13 @@ function getNextId(arr) {
     }
     return highestId + 1;
 }
+
+// takes in challenge, returns id of user with highest votes
+function getWinner(challenge) {
+    const db = getDb();
+    for(let i = 0; i < db.groups.challenges.length; i++){
+        if(challenge === db.groups.challenges[i].prompt){
+            
+        }
+    }
+}
