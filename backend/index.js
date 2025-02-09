@@ -43,7 +43,8 @@ app.get("/login", (req, res) => {
     const password = req.query.password;
     const authToken = login(email, password);
     if (authToken) {
-        res.status(200).json({auth: authToken});
+        const userId = authUser(authToken);
+        res.status(200).json({auth: authToken, userId: userId});
     } else {
         res.status(400).send("Nope");
     }
@@ -269,7 +270,7 @@ app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
 
 // -- fake post routes -------------------------------------------------
 
-app.get("post-new-group", (req, res) => {
+app.get("/post-new-group", (req, res) => {
     const auth = req.query.auth;
     const groupName = req.query.groupName;
     const initialPrompt = req.query.initialPrompt;
@@ -301,6 +302,35 @@ app.get("post-new-group", (req, res) => {
             submissions: [],
         }],
     });
+
+    res.status(200).send("Success");
+});
+
+app.get("/post-cast-vote", (req, res) => {
+    const db = getDb();
+    const userId = Number(req.query.auth);
+    const groupId = Number(req.query.groupId);
+    const submissionIds = req.query.submissionIds;
+
+    if (!(userId > 0)) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+    if (!(groupId > 0)) {
+        res.status(400).send("Invalid groupId");
+        return;
+    }
+
+    const group = db.groups.find(group => group.id === groupId);
+    const challenge = group.challenges[group.challenges.length - 1];
+
+    for (const submissionId of submissionIds) {
+        const submission = challenge.submissions.find(s => s.id === submissionId);
+        submission.votes += 1;
+        challenge.contributors.append(userId);
+    }
+
+    res.status(200).send("All good");
 });
 
 // ---------------------------------------------------

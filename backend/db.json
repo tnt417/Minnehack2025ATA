@@ -23,8 +23,10 @@
         2
       ],
       "owner_id": 1,
+      "contributors": [1],
       "challenges": [
         {
+          "contributors": [1],
           "prompt": "Best Golden Gopher costume",
           "start_date": "2/1/2025",
           "end_date": "2/7/2025",
@@ -59,7 +61,7 @@
               "user_id": 2,
               "votes": 25,
               "id": 2,
-              "image_name": "325ede4516d4de7ab824b96422407c69"
+              "image_name": "6a0b266e6981c64c232414e0a686f273"
             }
           ]
         }
@@ -76,6 +78,7 @@
       "owner_id": 1,
       "challenges": [
         {
+          "contributors": [1],
           "prompt": "Best skyline shot of Minneapolis",
           "start_date": "2/15/2025",
           "end_date": "2/21/2025",
@@ -127,6 +130,7 @@
       "owner_id": 1,
       "challenges": [
         {
+          "contributors": [1],
           "prompt": "Create the most innovative tech prototype",
           "start_date": "3/1/2025",
           "end_date": "3/7/2025",
