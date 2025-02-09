@@ -1,4 +1,4 @@
-import { authUser, getDb, getWinner, login, saveDb, signup } from "./database.js";
+import { authUser, getDb, getNextId, getWinner, login, saveDb, signup } from "./database.js";
 import express from "express";
 import cors from "cors";
 import multer from "multer";
@@ -139,7 +139,7 @@ app.get("/all-groups", (req, res) => {
 
     const db  = getDb();
     const data = db.groups
-        .filter(group => !group.member_ids.contains(userId))
+        .filter(group => !group.member_ids.includes(userId))
         .map(group => ({
             id: group.id,
             name: group.name,
@@ -198,7 +198,9 @@ app.get("/leaderboard", (req, res) => {
     const data = [];
 
     for (const [k, v] of Object.entries(wins)) {
-        data.push({userId: Number(k), score: v});
+        const name = db.users.find(user => user.id === Number(k));
+        const score = v;
+        data.push({name, score});
     }
 
     data.sort((a, b) => a.score - b.score);
@@ -227,6 +229,42 @@ app.post("/challenge-submission", multUpload.single("file"), (req, res) => {
 
     res.status(200).send("File uploaded");
 })
+
+// -- fake post routes -------------------------------------------------
+
+app.get("post-new-group", (req, res) => {
+    const auth = req.query.auth;
+    const groupName = req.query.groupName;
+    const initialPrompt = req.query.initialPrompt;
+    const userId = authUser(auth);
+
+    if (!userId) {
+        res.status(400).send("Not logged in");
+        return;
+    }
+    if (!typeof groupName === "string" || !typeof initialPrompt === "string") {
+        res.status(400).send("Invalid input");
+        return;
+    }
+
+    const db = getDb();
+    const nextId = getNextId(db.groups);
+
+    db.groups.push({
+        name: groupName,
+        location: "idk",
+        id: nextId,
+        member_ids: [userId],
+        owner_id: userId,
+        challenges: [{
+            prompt: initialPrompt,
+            start_date: Date.now(),
+            end_date: Date.now() + 604800000,
+            id: 1,
+            submissions: [],
+        }],
+    });
+});
 
 // ---------------------------------------------------
 

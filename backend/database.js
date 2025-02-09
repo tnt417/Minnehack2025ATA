@@ -105,7 +105,7 @@ export function authUser(authToken) {
 
 // -- internal functions --------------------------
 
-function getNextId(arr) {
+export function getNextId(arr) {
     let highestId = 0;
     for (const obj of arr) {
         highestId = Math.max(highestId, obj.id);

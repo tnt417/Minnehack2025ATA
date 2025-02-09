@@ -22,6 +22,7 @@
         1,
         2
       ],
+      "owner_id": 1,
       "challenges": [
         {
           "prompt": "Best Golden Gopher costume",
@@ -68,6 +69,7 @@
         1,
         2
       ],
+      "owner_id": 1,
       "challenges": [
         {
           "prompt": "Best skyline shot of Minneapolis",
@@ -114,6 +116,7 @@
         1,
         2
       ],
+      "owner_id": 1,
       "challenges": [
         {
           "prompt": "Create the most innovative tech prototype",
@@ -146,190 +149,6 @@
             {
               "user_id": 2,
               "votes": 35,
-              "id": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "John's Group",
-      "location": "Dinkytown",
-      "id": 5,
-      "member_ids": [
-        1,
-        2
-      ],
-      "challenges": [
-        {
-          "prompt": "Best Dinkytown food spot review",
-          "start_date": "3/15/2025",
-          "end_date": "3/21/2025",
-          "id": 1,
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 18,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 22,
-              "id": 2
-            }
-          ]
-        },
-        {
-          "prompt": "Most memorable Dinkytown moment",
-          "start_date": "3/22/2025",
-          "end_date": "3/28/2025",
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 24,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 28,
-              "id": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tangletown Troops",
-      "location": "Tangletown, Minneapolis",
-      "id": 6,
-      "member_ids": [
-        1,
-        2
-      ],
-      "challenges": [
-        {
-          "prompt": "Best park exploration in Tangletown",
-          "start_date": "4/1/2025",
-          "end_date": "4/7/2025",
-          "id": 1,
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 16,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 20,
-              "id": 2
-            }
-          ]
-        },
-        {
-          "prompt": "Most unique street art in Tangletown",
-          "start_date": "4/8/2025",
-          "end_date": "4/14/2025",
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 22,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 26,
-              "id": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Richfield Spartans",
-      "location": "Richfield, MN",
-      "id": 7,
-      "member_ids": [
-        1,
-        2
-      ],
-      "challenges": [
-        {
-          "prompt": "Best Richfield nature spot photo",
-          "start_date": "4/15/2025",
-          "end_date": "4/21/2025",
-          "id": 1,
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 27,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 32,
-              "id": 2
-            }
-          ]
-        },
-        {
-          "prompt": "Most creative outdoor activity in Richfield",
-          "start_date": "4/22/2025",
-          "end_date": "4/28/2025",
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 31,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 36,
-              "id": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Minnehack 2025",
-      "location": "University of Minnesota - Tech Campus",
-      "id": 8,
-      "member_ids": [
-        1,
-        2
-      ],
-      "challenges": [
-        {
-          "prompt": "Best AI-powered project",
-          "start_date": "5/1/2025",
-          "end_date": "5/7/2025",
-          "id": 1,
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 40,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 45,
-              "id": 2
-            }
-          ]
-        },
-        {
-          "prompt": "Most innovative hackathon idea",
-          "start_date": "5/8/2025",
-          "end_date": "5/14/2025",
-          "submissions": [
-            {
-              "user_id": 1,
-              "votes": 50,
-              "id": 1
-            },
-            {
-              "user_id": 2,
-              "votes": 55,
               "id": 2
             }
           ]
