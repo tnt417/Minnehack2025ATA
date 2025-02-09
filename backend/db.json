@@ -1,12 +1,53 @@
 {
   "users": [
-    {
-      "name": "wublin",
-      "age": 23
-    },
-    {
-      "name": "ashley",
-      "age": 12
-    }
+      {
+          "name": "Aarush",
+          "email": "aarush@gmail.com",
+          "user_id": "1"
+      }, 
+      {
+          "name": "Alex",
+          "email": "alex@gmail.com",
+          "user_id": "2"
+      }
+  ],
+  "groups": [
+      {
+          "name": "UMN",        
+          "location": "Campus",
+          "member_ids": [1, 2],
+          "challenges": [
+              {
+                  "prompt": "coolest stick",
+                  "start_date": "1/1/2025",
+                  "end_date": "1/7/2025",
+                  "submissions": [
+                      {
+                          "user_id": 1,
+                          "votes": 15
+                      },
+                      {
+                          "user_id": 2,
+                          "votes": 20
+                      }
+                  ]
+              },
+              {
+                  "prompt": "biggest rock",
+                  "start_date": "1/8/2025",
+                  "end_date": "1/14/2025",
+                  "submissions": [
+                      {
+                          "user_id": 1,
+                          "votes": 25
+                      },
+                      {
+                          "user_id": 2,
+                          "votes": 30
+                      }
+                  ]
+              }
+          ]
+      }
   ]
 }
