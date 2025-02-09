@@ -1,4 +1,4 @@
-import { authUser, getDb, login, saveDb, signup } from "./database.js";
+import { authUser, getDb, getWinner, login, saveDb, signup } from "./database.js";
 import express from "express";
 import cors from "cors";
 import multer from "multer";
@@ -146,19 +146,8 @@ app.get("/all-groups", (req, res) => {
             memberCount: group.member_ids.length,
         }));
 
-    // for(let i = 0; i < db.groups.length; i++){
-    //     // names.push(db.groups[i].name);
-    //     data.push({
-    //         id: db.groups[i].id,
-    //         name: db.groups[i].name,
-    //         memberCount: db.groups[i].member_ids.length
-    //     })
-    // }
-
     res.status(200).json(data);
 });
-
-
 
 //(groupId: string) -> group data json object
 app.get("/group-data", (req, res) => {
@@ -184,33 +173,38 @@ app.get("/group-data", (req, res) => {
     res.status(200).json(data);
 })
 
-
 //(groupId: string) -> name & scores[]
 app.get("/leaderboard", (req, res) => {
-    const groupId = req.query.groupId;
-    if(groupId != "String"){
+    const groupId = Number(req.query.groupId);
+    if(!(groupId > 0)) {
         res.status(400).send("Invalid Input");
+        return;
     }
 
     const db = getDb();
     const challenges = db.groups.find(group => group.id === groupId).challenges;
 
-    // loop over challenges
-    // for each challenge: getWinner(challenge)
+    const wins = {};
 
-    const wins = {
-        userId: wins
-    };
-
-    const winners = []
-    for(let i = 0; i < db.groups.length; i++){
-        if(db.groups[i].id === groupId){
-            for(let j = 0; j < db.groups.challenges.length; j++){
-                winners.push[getWinner(challenges[j])]
-            }
+    for (const challenge of challenges) {
+        const winnerId = String(getWinner(challenge));
+        if (winnerId in wins) {
+            wins[winnerId] += 1;
+        } else {
+            wins[winnerId] = 1;
         }
     }
-})
+
+    const data = [];
+
+    for (const [k, v] of Object.entries(wins)) {
+        data.push({userId: Number(k), score: v});
+    }
+
+    data.sort((a, b) => a.score - b.score);
+
+    res.status(200).json(data);
+});
 
 // -- img routes -------------------------------------
 

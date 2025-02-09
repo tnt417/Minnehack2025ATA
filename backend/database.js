@@ -114,17 +114,16 @@ function getNextId(arr) {
 }
 
 // takes in challenge, returns id of user with highest votes
-function getWinner(challenge) {
-    data = []
+export function getWinner(challenge) {
+    const data = []
     const submissions = challenge.submissions;
-    max_id = challenge.submissions[0].user_id;
-    max_votes = challenges.submissions[0].votes;
+    const best_id = 1;
+    const highest_votes = 0;
     for(let i = 0; i < challenge.submissions.length; i++){
-        if(challenge.submissions[i].votes > max_votes){
-            max_votes = challenge.submissions[i].votes;
-            max_id = challenge.submissions[i].user_id;
+        if(challenge.submissions[i].votes > highest_votes){
+            highest_votes = challenge.submissions[i].votes;
+            best_id = challenge.submissions[i].user_id;
         }
     }
-
-    return max_id;
+    return best_id;
 }
